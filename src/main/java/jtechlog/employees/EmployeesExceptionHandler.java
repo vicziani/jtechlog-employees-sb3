@@ -12,11 +12,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.List;
 import java.util.stream.Collectors;
 
-@ControllerAdvice
+// @ControllerAdvice
 public class EmployeesExceptionHandler {
-
-    // Content-type még nem jó: https://github.com/spring-projects/spring-framework/issues/28189
-    // M5-ben javítják
 
     @ExceptionHandler
     public ProblemDetail handle(EmployeeNotFoundException exception) {

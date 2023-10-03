@@ -1,6 +1,6 @@
 # Spring Boot 3 példa
 
-Ez a program a JTechLog (<http://jtechlog.hu>) blog "Mi várható a Spring Boot 3-ban?" posztjához készült példaprogram.
+Ez a program a JTechLog (<http://jtechlog.hu>) blog "Spring Boot 3 újdonságai" posztjához készült példaprogram.
 Spring Boot alkalmazás.
 
 Futtatásához adatbázis szükséges, mely Dockerrel a következőképp indítható:

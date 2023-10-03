@@ -9,31 +9,34 @@ import java.util.List;
 @AllArgsConstructor
 public class EmployeesService {
 
-    private EmployeeMapper employeeMapper;
-
     private EmployeesRepository repository;
 
-    public List<EmployeeDto> listEmployees() {
-        return employeeMapper.toDto(repository.findAll());
+    public List<EmployeeResource> listEmployees() {
+        return repository.findAllResources();
     }
 
-    public EmployeeDto findEmployeeById(long id) {
-        return employeeMapper.toDto(repository.findById(id).orElseThrow(() -> new EmployeeNotFoundException("employee not found")));
+    public EmployeeResource findEmployeeById(long id) {
+        return toDto(repository.findById(id).orElseThrow(() -> new EmployeeNotFoundException("employee not found")));
     }
 
-    public EmployeeDto createEmployee(CreateEmployeeCommand command) {
+    public EmployeeResource createEmployee(EmployeeResource command) {
         Employee employee = new Employee(command.getName());
         repository.save(employee);
-        return employeeMapper.toDto(employee);
+        return toDto(employee);
     }
 
-    public EmployeeDto updateEmployee(long id, UpdateEmployeeCommand command) {
+    public EmployeeResource updateEmployee(long id, EmployeeResource command) {
         Employee employee = repository.findById(id).orElseThrow(() -> new EmployeeNotFoundException("employee not found"));
         employee.setName(command.getName());
-        return employeeMapper.toDto(employee);
+        return toDto(employee);
     }
 
     public void deleteEmployee(long id) {
         repository.deleteById(id);
     }
+
+    private EmployeeResource toDto(Employee employee) {
+        return new EmployeeResource(employee.getId(), employee.getName());
+    }
+
 }

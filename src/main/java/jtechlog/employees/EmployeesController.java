@@ -17,23 +17,23 @@ public class EmployeesController {
     }
 
     @GetMapping
-    public List<EmployeeDto> listEmployees() {
+    public List<EmployeeResource> listEmployees() {
         return employeesService.listEmployees();
     }
 
     @GetMapping("/{id}")
-    public EmployeeDto findEmployeeById(@PathVariable("id") long id) {
+    public EmployeeResource findEmployeeById(@PathVariable("id") long id) {
         return employeesService.findEmployeeById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EmployeeDto createEmployee(@Valid @RequestBody CreateEmployeeCommand command) {
+    public EmployeeResource createEmployee(@Valid @RequestBody EmployeeResource command) {
         return employeesService.createEmployee(command);
     }
 
     @PutMapping("/{id}")
-    public EmployeeDto updateEmployee(@PathVariable("id") long id, @RequestBody UpdateEmployeeCommand command) {
+    public EmployeeResource updateEmployee(@PathVariable("id") long id, @RequestBody EmployeeResource command) {
         return employeesService.updateEmployee(id, command);
     }
 

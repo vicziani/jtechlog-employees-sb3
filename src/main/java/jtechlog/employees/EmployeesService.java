@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 @Service
 @AllArgsConstructor
@@ -16,7 +17,7 @@ public class EmployeesService {
     }
 
     public EmployeeResource findEmployeeById(long id) {
-        return toDto(repository.findById(id).orElseThrow(() -> new EmployeeNotFoundException("employee not found")));
+        return toDto(repository.findById(id).orElseThrow(notFountException(id)));
     }
 
     public EmployeeResource createEmployee(EmployeeResource command) {
@@ -26,7 +27,7 @@ public class EmployeesService {
     }
 
     public EmployeeResource updateEmployee(long id, EmployeeResource command) {
-        Employee employee = repository.findById(id).orElseThrow(() -> new EmployeeNotFoundException("employee not found"));
+        Employee employee = repository.findById(id).orElseThrow(notFountException(id));
         employee.setName(command.getName());
         return toDto(employee);
     }
@@ -37,6 +38,10 @@ public class EmployeesService {
 
     private EmployeeResource toDto(Employee employee) {
         return new EmployeeResource(employee.getId(), employee.getName());
+    }
+
+    private Supplier<EmployeeNotFoundException> notFountException(long id) {
+        return () -> new EmployeeNotFoundException("Employee not found with id: %d".formatted(id));
     }
 
 }
